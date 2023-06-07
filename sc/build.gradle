@@ -25,6 +25,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.30.2'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.73'
+    implementation group: 'org.bouncycastle', name: 'bcpkix-jdk18on', version: '1.73'
 }
 
 tasks.named('test') {
