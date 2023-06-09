@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.StringReader;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Map;
 
 @Controller
 public class MainContorller {
@@ -47,9 +48,10 @@ public class MainContorller {
 //    }
 
     @RequestMapping(value = "/appleLoginCallBack")
-    public ResponseEntity<String> handleAppleLogin(@RequestBody String idToken) {
+    public ResponseEntity<String> handleAppleLogin(@RequestBody Map<String, Object> payload) {
+//    public ResponseEntity<String> handleAppleLogin(@RequestBody String idToken) {
 
-        System.out.println("idToken : " + idToken);
+        System.out.println("payload : " + payload);
         return ResponseEntity.ok("OK");
 //        try {
 //            // 애플 서버의 공개 키를 사용하여 JWT 검증
