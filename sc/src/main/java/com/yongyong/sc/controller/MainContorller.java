@@ -31,7 +31,7 @@ public class MainContorller {
         return "index.html";
     }
 
-    @RequestMapping(value = "/appleLoginCallBack", method = RequestMethod.POST, produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
+    @RequestMapping(value = "/appleLoginCallBack", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
     public ResponseEntity<String> handleAppleLogin(Map<String, String> payload) {
 
         System.out.println("size : " + payload.size());
