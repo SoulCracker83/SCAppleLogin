@@ -47,8 +47,7 @@ public class MainContorller {
     public ResponseEntity<String> handleAppleLogin(@RequestParam Map<String, String> payload) {
 
         System.out.println("size : " + payload.size());
-        System.out.println("idToken : " + payload.get("idToken"));
-//        System.out.println("payload : " + payload);
+        System.out.println("payload : " + payload);
 
 //        DecodedJWT decodedJWT = JWT.decode(idToken);
 //
