@@ -1,27 +1,31 @@
 package com.yongyong.sc.controller;
 
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.*;
-import com.nimbusds.jwt.*;
-
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
-import org.springframework.http.HttpStatus;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import com.auth0.jwt.JWT;
 
-import java.io.StringReader;
-import java.security.interfaces.RSAPublicKey;
+import java.util.Map;
 
 @Controller
 public class MainContorller {
 
     @RequestMapping(value = "/")
     public String main(){
+
+        String idToken = "eyJraWQiOiJmaDZCczhDIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLnBheWFwcGNhZmUiLCJleHAiOjE2ODYzNzU1MjAsImlhdCI6MTY4NjI4OTEyMCwic3ViIjoiMDAxMDgyLjY4YmJhNDI0ZjhiNzQ1OTQ4ZDM5OWExYzk2NWI0ZWMxLjAxNTciLCJjX2hhc2giOiJqUDFMRmJhZEUwSGctdjJuTUpyOGpBIiwiZW1haWwiOiJhaW4wNjMwQG5hdmVyLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjoidHJ1ZSIsImF1dGhfdGltZSI6MTY4NjI4OTEyMCwibm9uY2Vfc3VwcG9ydGVkIjp0cnVlfQ.kpngr6OwDDROHV-g8f4hbfKmzZ4OaYr5r8CrAJH1C6PAfsuk_NnUraqOyglAViGQAHxJiBk-3xXXhkxpXV96xWdFPN7S95x32_rTSvfxsrXE1S4sqVG35ygBqTHZvARY9kGeTr1nj-llGSo4-pZfBmgEJLIz0uMHcXMP2Pcdlqg3YFsAcCsKeRAg-mdF1ivkYoC-7lAxKYGk8iWHEDxv7TkEeYHT6n39aXdG1BQ_8HWMfg701F6DmmOmAUWBkLV_sBUKdOCOG2KCJrfYZp1_wYLHE1LGsaQbskpEzXQqkuYL_UNKGhnBSur_DLH-G0_c6ci2HFOq6bvsjGeiIDdRHA";
+
+        DecodedJWT decodedJWT = JWT.decode(idToken);
+
+        String userId = decodedJWT.getSubject();
+        String email = decodedJWT.getClaim("email").asString();
+        String name = decodedJWT.getClaim("name").asString();
+        System.out.println("userId : " + userId);
+        System.out.println("email : " + email);
+        System.out.println("name : " + name);
+
 
         return "index.html";
     }
@@ -47,9 +51,20 @@ public class MainContorller {
 //    }
 
     @RequestMapping(value = "/appleLoginCallBack")
-    public ResponseEntity<String> handleAppleLogin(@RequestBody String idToken) {
+    public ResponseEntity<String> handleAppleLogin(@RequestBody Map<String, Object> payload) {
 
-        System.out.println("idToken : " + idToken);
+        System.out.println("payload : " + payload);
+
+//        DecodedJWT decodedJWT = JWT.decode(idToken);
+//
+//        String userId = decodedJWT.getSubject();
+//        String email = decodedJWT.getClaim("email").asString();
+//        String name = decodedJWT.getClaim("name").asString();
+//
+//        System.out.println("userId : " + userId);
+//        System.out.println("email : " + email);
+//        System.out.println("name : " + name);
+
         return ResponseEntity.ok("OK");
 //        try {
 //            // 애플 서버의 공개 키를 사용하여 JWT 검증
