@@ -57,32 +57,34 @@ public class MainContorller {
 
 
     @RequestMapping(value = "/appleLoginCallBack")
-    public String handleAppleLogin(@RequestParam Map<String, String> payload, Model model) {
+    public String handleAppleLogin(HttpServletRequest request, Model model) {
 
-        System.out.println("size : " + payload.size());
-        System.out.println("payload : " + payload);
-        System.out.println("state : " + payload.get("state"));
-        System.out.println("id_token : " + payload.get("id_token"));
-        System.out.println("code : " + payload.get("code"));
+        System.out.println("id_token : " + request.getParameter("id_token"));
 
-        DecodedJWT decodedJWT = JWT.decode(payload.get("id_token"));
-
-        String userId = decodedJWT.getSubject();
-        String email = decodedJWT.getClaim("email").asString();
-        String name = decodedJWT.getClaim("name").asString();
-
-        System.out.println("userId : " + userId);
-        System.out.println("email : " + email);
-        if(null != name) {
-            System.out.println("name : " + name);
-        }
-        else {
-            name = "";
-            System.out.println("name is null");
-        }
-        model.addAttribute("userId",userId);
-        model.addAttribute("email",email);
-        model.addAttribute("name",name);
+//        System.out.println("size : " + payload.size());
+//        System.out.println("payload : " + payload);
+//        System.out.println("state : " + payload.get("state"));
+//        System.out.println("id_token : " + payload.get("id_token"));
+//        System.out.println("code : " + payload.get("code"));
+//
+//        DecodedJWT decodedJWT = JWT.decode(payload.get("id_token"));
+//
+//        String userId = decodedJWT.getSubject();
+//        String email = decodedJWT.getClaim("email").asString();
+//        String name = decodedJWT.getClaim("name").asString();
+//
+//        System.out.println("userId : " + userId);
+//        System.out.println("email : " + email);
+//        if(null != name) {
+//            System.out.println("name : " + name);
+//        }
+//        else {
+//            name = "";
+//            System.out.println("name is null");
+//        }
+//        model.addAttribute("userId",userId);
+//        model.addAttribute("email",email);
+//        model.addAttribute("name",name);
 
         return "result";
     }
