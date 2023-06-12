@@ -57,7 +57,7 @@ public class MainContorller {
 
 
     @RequestMapping(value = "/appleLoginCallBack")
-    public String handleAppleLogin(@RequestParam Map<String, String> payload) {
+    public String handleAppleLogin(@RequestParam Map<String, String> payload, Model model) {
 
         System.out.println("size : " + payload.size());
         System.out.println("payload : " + payload);
@@ -80,6 +80,9 @@ public class MainContorller {
             name = "";
             System.out.println("name is null");
         }
+        model.addAttribute("userId",userId);
+        model.addAttribute("email",email);
+        model.addAttribute("name",name);
 
         return "result";
     }
