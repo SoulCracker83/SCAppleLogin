@@ -32,7 +32,7 @@ public class MainContorller {
     }
 
     @RequestMapping(value = "/appleLoginCallBack", method = RequestMethod.POST, produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-    public ResponseEntity<String> handleAppleLogin(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<String> handleAppleLogin(Map<String, String> payload) {
 
         System.out.println("payload : " + payload);
 
