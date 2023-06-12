@@ -3,11 +3,8 @@ package com.yongyong.sc.controller;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.auth0.jwt.JWT;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Map;
 
@@ -47,11 +44,11 @@ public class MainContorller {
 //    }
 
     @RequestMapping(value = "/appleLoginCallBack", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-    public ResponseEntity<String> handleAppleLogin(@RequestBody String payload) {
+    public ResponseEntity<String> handleAppleLogin(@RequestParam Map<String, String> payload) {
 
-//        System.out.println("size : " + payload.size());
-//        System.out.println("idToken : " + payload.get("idToken"));
-        System.out.println("payload : " + payload);
+        System.out.println("size : " + payload.size());
+        System.out.println("idToken : " + payload.get("idToken"));
+//        System.out.println("payload : " + payload);
 
 //        DecodedJWT decodedJWT = JWT.decode(idToken);
 //
