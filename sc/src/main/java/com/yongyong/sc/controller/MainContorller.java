@@ -60,7 +60,10 @@ public class MainContorller {
 
         System.out.println("userId : " + userId);
         System.out.println("email : " + email);
-        System.out.println("name : " + name);
+        if(null != name)
+            System.out.println("name : " + name);
+        else
+            System.out.println("name is null");
 
         return ResponseEntity.ok("OK");
 //        try {
