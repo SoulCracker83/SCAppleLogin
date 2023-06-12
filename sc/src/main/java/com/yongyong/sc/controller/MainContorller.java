@@ -32,7 +32,7 @@ public class MainContorller {
         return "index.html";
     }
 
-    @PostMapping("/appleLoginCallBack")
+    @PostMapping(value = "/appleLoginCallBack", consumes = {"application/x-www-form-urlencoded"})
     public ResponseEntity<?> yourMethod(@RequestBody Map<String, Object> requestBody) {
         // 요청 본문의 데이터를 Map으로 받아서 처리하는 로직
         // requestBody에는 요청 본문의 JSON 데이터가 Map 형태로 매핑됩니다.
