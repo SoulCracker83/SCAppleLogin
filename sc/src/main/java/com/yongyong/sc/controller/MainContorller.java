@@ -56,8 +56,8 @@ public class MainContorller {
     }
 
 
-    @RequestMapping(value = "/appleLoginCallBack", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-    public @ResponseBody ResponseEntity<String> handleAppleLogin(@RequestParam Map<String, String> payload) {
+    @RequestMapping(value = "/appleLoginCallBack")
+    public String handleAppleLogin(@RequestParam Map<String, String> payload) {
 
         System.out.println("size : " + payload.size());
         System.out.println("payload : " + payload);
@@ -81,7 +81,7 @@ public class MainContorller {
             System.out.println("name is null");
         }
 
-        return ResponseEntity.ok("{\"userId\":\""+userId+"\", "+"\"email\":\""+email+"\", "+"\"name\":\""+name+"\"}");
+        return "result";
     }
 
 }
