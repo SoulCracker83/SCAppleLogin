@@ -3,6 +3,7 @@ package com.yongyong.sc.controller;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.auth0.jwt.JWT;
@@ -31,7 +32,21 @@ public class MainContorller {
         return "index.html";
     }
 
-    @RequestMapping(value = "/appleLoginCallBack", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
+    @PostMapping("/appleLoginCallBack")
+    public ResponseEntity<?> yourMethod(@RequestBody Map<String, Object> requestBody) {
+        // 요청 본문의 데이터를 Map으로 받아서 처리하는 로직
+        // requestBody에는 요청 본문의 JSON 데이터가 Map 형태로 매핑됩니다.
+
+        // 예시: 요청 본문에서 'key'라는 키에 해당하는 값을 가져와서 출력합니다.
+        Object value = requestBody.get("key");
+        System.out.println("Value: " + value);
+        System.out.println("requestBody : " + requestBody.size());
+
+        // 처리 결과에 따라 적절한 응답을 반환합니다.
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/appleLoginCallBack2", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
     public ResponseEntity<String> handleAppleLogin(Map<String, String> payload) {
 
         System.out.println("size : " + payload.size());
