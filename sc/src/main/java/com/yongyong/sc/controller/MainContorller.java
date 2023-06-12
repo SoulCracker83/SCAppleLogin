@@ -79,6 +79,7 @@ public class MainContorller {
         model.addAttribute("userId",userId);
         model.addAttribute("email",email);
         model.addAttribute("name",name);
+        System.out.println("model add");
 
         return "result";
     }
