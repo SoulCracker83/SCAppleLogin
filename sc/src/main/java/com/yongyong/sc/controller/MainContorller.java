@@ -47,7 +47,7 @@ public class MainContorller {
 //    }
 
     @RequestMapping(value = "/appleLoginCallBack", produces = {"application/json", "application/xml"}, consumes = {"application/x-www-form-urlencoded"})
-    public ResponseEntity<String> handleAppleLogin(String payload) {
+    public ResponseEntity<String> handleAppleLogin(@RequestBody String payload) {
 
 //        System.out.println("size : " + payload.size());
 //        System.out.println("idToken : " + payload.get("idToken"));
