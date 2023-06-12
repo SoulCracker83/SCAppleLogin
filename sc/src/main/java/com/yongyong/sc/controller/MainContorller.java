@@ -31,7 +31,7 @@ public class MainContorller {
         return "index.html";
     }
 
-    @RequestMapping(value = "/appleLoginCallBack", consumes = "application/x-www-form-urlencoded")
+    @RequestMapping(value = "/appleLoginCallBack", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
     public ResponseEntity<String> handleAppleLogin(@RequestBody Map<String, String> payload) {
 
         System.out.println("payload : " + payload);
