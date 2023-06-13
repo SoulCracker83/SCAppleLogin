@@ -27,7 +27,7 @@ public class MainContorller {
 //        System.out.println("email : " + email);
 //        System.out.println("name : " + name);
 
-        return "index";
+        return "/index";
     }
     @RequestMapping(value = "/test")
     public String test(HttpServletRequest request, Model model) {
@@ -52,7 +52,7 @@ public class MainContorller {
         model.addAttribute("email",email);
         model.addAttribute("name",name);
 
-        return "result";
+        return "/result";
     }
 
 
@@ -81,7 +81,7 @@ public class MainContorller {
         model.addAttribute("name",name);
         System.out.println("model add");
 
-        return "result";
+        return "/result";
     }
 
 }
