@@ -112,7 +112,7 @@ public class MainContorller {
             model.addAttribute("name","");
         } else {
             DecodedJWT decodedJWT = JWT.decode(idToken);
-            System.out.println("decode.getPayload() : " + decode.getPayload());
+            System.out.println("decode.getPayload() : " + decodedJWT.getPayload());
 
             String userId = decodedJWT.getSubject();
             String email = decodedJWT.getClaim("email").asString();
