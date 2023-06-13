@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.auth0.jwt.JWT;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
+import java.util.Base64;
 
 @Controller
 public class MainContorller {
@@ -30,6 +32,14 @@ public class MainContorller {
     @RequestMapping(value = "/test")
     public String test(HttpServletRequest request, Model model) {
         String idToken = "eyJraWQiOiJmaDZCczhDIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLnBheWFwcGNhZmUiLCJleHAiOjE2ODYzNzU1MjAsImlhdCI6MTY4NjI4OTEyMCwic3ViIjoiMDAxMDgyLjY4YmJhNDI0ZjhiNzQ1OTQ4ZDM5OWExYzk2NWI0ZWMxLjAxNTciLCJjX2hhc2giOiJqUDFMRmJhZEUwSGctdjJuTUpyOGpBIiwiZW1haWwiOiJhaW4wNjMwQG5hdmVyLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjoidHJ1ZSIsImF1dGhfdGltZSI6MTY4NjI4OTEyMCwibm9uY2Vfc3VwcG9ydGVkIjp0cnVlfQ.kpngr6OwDDROHV-g8f4hbfKmzZ4OaYr5r8CrAJH1C6PAfsuk_NnUraqOyglAViGQAHxJiBk-3xXXhkxpXV96xWdFPN7S95x32_rTSvfxsrXE1S4sqVG35ygBqTHZvARY9kGeTr1nj-llGSo4-pZfBmgEJLIz0uMHcXMP2Pcdlqg3YFsAcCsKeRAg-mdF1ivkYoC-7lAxKYGk8iWHEDxv7TkEeYHT6n39aXdG1BQ_8HWMfg701F6DmmOmAUWBkLV_sBUKdOCOG2KCJrfYZp1_wYLHE1LGsaQbskpEzXQqkuYL_UNKGhnBSur_DLH-G0_c6ci2HFOq6bvsjGeiIDdRHA";
+
+        String[] jwt = idToken.split("[.]");
+        Base64.Decoder decoder = Base64.getDecoder();
+
+        byte[] headDecodedBytes = decoder.decode(jwt[0]);
+        System.out.println("인코딩 전 : " + new String(headDecodedBytes));
+        byte[] payloadDecodedBytes = decoder.decode(jwt[1]);
+        System.out.println("인코딩 전 : " + new String(payloadDecodedBytes));
 
         DecodedJWT decodedJWT = JWT.decode(idToken);
 
@@ -56,28 +66,26 @@ public class MainContorller {
 
     @RequestMapping(value = "/appleLoginCallBack")
     public String handleAppleLogin(HttpServletRequest request, Model model) {
+        String idToken = request.getParameter("id_token");
+        String user = request.getParameter("user");
+        System.out.println("id_token : " + idToken);
+        System.out.println("user : " + user);
 
-        System.out.println("id_token : " + request.getParameter("id_token"));
+        if(null == idToken || idToken.isEmpty()) {
+            model.addAttribute("userId","");
+            model.addAttribute("email","");
+            model.addAttribute("name","");
+        } else {
+            DecodedJWT decodedJWT = JWT.decode(idToken);
 
-        DecodedJWT decodedJWT = JWT.decode(request.getParameter("id_token"));
+            String userId = decodedJWT.getClaim("userId").asString();
+            String email = decodedJWT.getClaim("email").asString();
+            String name = decodedJWT.getClaim("name").asString();
 
-        String userId = decodedJWT.getSubject();
-        String email = decodedJWT.getClaim("email").asString();
-        String name = decodedJWT.getClaim("name").asString();
-
-        System.out.println("userId : " + userId);
-        System.out.println("email : " + email);
-        if(null != name) {
-            System.out.println("name : " + name);
+            if(null == name) name = "";
+            if(null == email) email = "";
+            if(null == userId) userId = "";
         }
-        else {
-            name = "";
-            System.out.println("name is null");
-        }
-        model.addAttribute("userId",userId);
-        model.addAttribute("email",email);
-        model.addAttribute("name",name);
-        System.out.println("model add");
 
         return "result";
     }
