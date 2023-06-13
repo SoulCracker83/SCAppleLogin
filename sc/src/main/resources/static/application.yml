@@ -1,6 +1,0 @@
-spring:
-  mvc:
-    static-path-pattern: "/resources/**"
-    view:
-      suffix: ".jsp"
-      prefix: "/WEB-INF/jsp/"
