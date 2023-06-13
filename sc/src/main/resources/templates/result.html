@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>데이터 테스트</title>
+</head>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  let userId = /*[[${userId}]]*/;
+  let email = /*[[${email}]]*/;
+  let name = /*[[${name}]]*/;
+  /*]]>*/
+  window.onload = function(){
+    console.log("userId : " + userId);
+    console.log("email : " + email);
+    console.log("name : " + name);
+    alert(userId);
+    // PacApp._appleLogin(userId, email, name);
+  };
+</script>
+<body>
+  <p th:text="${userId}">1 </p>
+  <p th:text="${email}">2 </p>
+  <p th:text="${name}">3 </p>
+</body>
+</html>

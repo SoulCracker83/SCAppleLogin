@@ -1,14 +1,12 @@
 package com.yongyong.sc.controller;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.auth0.jwt.JWT;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @Controller
 public class MainContorller {
