@@ -90,6 +90,9 @@ public class MainContorller {
         System.out.println("id_token : " + idToken);
         System.out.println("user : " + user);
 
+        String strPayload = convert(idToken, String.class);
+        System.out.println("strPayload : " + strPayload);
+
 //        if(null != user) {
 //            // 최초 로그인 {"name":{"firstName":"kwangyong","lastName":"kim"},"email":"ain0630@naver.com"}
 //
@@ -127,7 +130,17 @@ public class MainContorller {
     }
 
     private <T> T convert(String idToken, Class<T> toClass) {
+        String[] jwt = idToken.split("[.]");
+        Base64.Decoder decoder = Base64.getDecoder();
+        // header
+        byte[] headDecodedBytes = decoder.decode(jwt[0]);
+        System.out.println("header : " + new String(headDecodedBytes));
+        // payload
+        byte[] payloadDecodedBytes = decoder.decode(jwt[1]);
+        System.out.println("payload : " + new String(payloadDecodedBytes));
+
         DecodedJWT decode = JWT.decode(idToken);
+        System.out.println("payload : " + decode.getPayload());
         try {
             return objectMapper.readValue(decode.getPayload(), toClass);
         } catch (JsonProcessingException e) {
