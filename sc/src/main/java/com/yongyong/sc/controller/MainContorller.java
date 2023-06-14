@@ -3,17 +3,17 @@ package com.yongyong.sc.controller;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.yongyong.sc.vo.AppleIdTokenPayload;
+import com.yongyong.sc.vo.AppleLoginUserInfo;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.auth0.jwt.JWT;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
 import java.util.Base64;
 
 @RequiredArgsConstructor
@@ -81,45 +81,32 @@ public class MainContorller {
     @RequestMapping(value = "/appleLoginCallBack")
     public String handleAppleLogin(HttpServletRequest request, Model model) {
         String idToken = request.getParameter("id_token");
-        String user = request.getParameter("user");
-        System.out.println("id_token : " + idToken);
-        System.out.println("user : " + user);
-
-        AppleIdTokenPayload appleIdTokenPayloadVO = convert(idToken, AppleIdTokenPayload.class);
-        System.out.println("AppleIdTokenPayload id : " + appleIdTokenPayloadVO.getSub());
-        System.out.println("AppleIdTokenPayload email : " + appleIdTokenPayloadVO.getEmail());
-
-//        if(null != user) {
-//            // 최초 로그인 {"name":{"firstName":"kwangyong","lastName":"kim"},"email":"ain0630@naver.com"}
-//
-//            try {
-//                JSONObject json = new JSONObject(user);
-//                System.out.println(json.getJSONObject("student2"));
-//            } catch (JSONException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//        } else {
-//            // 2번쨰 이후 로그인..
-//
-//        }
-
-
         if(null == idToken || idToken.isEmpty()) {
             model.addAttribute("userId","");
             model.addAttribute("email","");
             model.addAttribute("name","");
         } else {
-            DecodedJWT decodedJWT = JWT.decode(idToken);
-            System.out.println("decode.getPayload() : " + decodedJWT.getPayload());
+            String user = request.getParameter("user");
+            System.out.println("id_token : " + idToken);
+            System.out.println("user : " + user);
 
-            String userId = decodedJWT.getSubject();
-            String email = decodedJWT.getClaim("email").asString();
-            String name = decodedJWT.getClaim("name").asString();
+            AppleLoginUserInfo appleLoginUserInfo = null;
+            if(null != user) {
+                // 최초 로그인
+                Gson gson = new GsonBuilder().create();
+                appleLoginUserInfo = gson.fromJson(user, AppleLoginUserInfo.class);
+                model.addAttribute("name",appleLoginUserInfo.getName().getLastName() +" "+ appleLoginUserInfo.getName().getFirstName());
+            } else {
+                // 2번쨰 이후 로그인..
+                model.addAttribute("name","");
+            }
 
-            if(null == name) name = "";
-            if(null == email) email = "";
-            if(null == userId) userId = "";
+            AppleIdTokenPayload appleIdTokenPayloadVO = convert(idToken, AppleIdTokenPayload.class);
+            System.out.println("AppleIdTokenPayload id : " + appleIdTokenPayloadVO.getSub());
+            System.out.println("AppleIdTokenPayload email : " + appleIdTokenPayloadVO.getEmail());
+
+            model.addAttribute("userId",appleIdTokenPayloadVO.getSub());
+            model.addAttribute("email",appleIdTokenPayloadVO.getEmail());
         }
 
         return "result";
